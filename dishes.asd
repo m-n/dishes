@@ -6,5 +6,5 @@
   :author "Matt Niemeir <matt.niemeir@gmail.com>"
   :license "BSD 2-clause"
   :components ((:file "package")
+               (:file "utils")
                (:file "dishes")))
-
