@@ -4,7 +4,9 @@ DISHES
 Some simple read macros.
 
 These are implemented as functions independent of the macro characters
-to which they might be bound. 
+to which they might be bound. The library is called DISHES because a
+convenient way to serve this style of read macro is by using
+LAZY-SUSAN.
 
 Example
 -------
@@ -29,10 +31,18 @@ Alternatively, you can use this system in conjuntion with LAZY-SUSAN.
     (ls:setup-package-rt (my-package)
       (#\# #\;) #'comment-line-suppress-forms)
 
-That will setup and set the readtable in the current file, and to use
-it in another file:
+That will setup and set the readtable in the current file. By default
+this uses a copy of the LAZY-SUSAN readtable as a base for your
+particular bindings. To use it in another file:
 
     (ls:in-package/rt #:my-package)
+
+or
+
+    (in-package #:my-package)
+
+    (eval-when (:compile-toplevel :load-toplevel :execute)
+      (setq *readtable* (ls:package-rt '#:my-package)))
 
 The Dishes
 ==========
