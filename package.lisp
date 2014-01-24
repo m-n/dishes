@@ -12,6 +12,7 @@
    #:comment-line-suppress-forms
    #:*print-commented-forms*
    #:unescapable-string-reader
+   #:formated-string-reader
    #:interned-string-reader
    #:html-reader
    #:pathname-this-directory-reader

@@ -87,6 +87,18 @@ string is the first unescaped (closer char)")
 	((char-equal c (closer char)))
       (write-char c string))))
 
+(defun formated-string-reader (stream char &optional count)
+  "Returns the value of (format nil string)."
+  (declare (ignore count))
+  (let ((string (with-output-to-string (s)
+                  (loop for c = (read-char stream t)
+                        until (char= c (closer char))
+                        do (princ (if (char= c #\\)
+                                      (read-char stream t)
+                                      c)
+                                  s)))))
+    (format nil string)))
+
 (defun not-reader (stream char &optional count)
   "Like ' but for (not ...) instead of (quote ...)"
   (declare (ignore count char))
