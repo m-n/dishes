@@ -62,3 +62,17 @@ The Dishes
     DEFAULT-SYNTAX-READER:   Read the next form with *readtable* bound to the standard readtable.
     HTML-READER:        Experimental reader for reading sexps into html.
     CLOSER:             The matching end character to char.
+
+Read until what?
+----------------
+
+For reader macros which process the characters on the stream instead
+of recursively calling read, it's necessary for us to define a
+character that determines when the input to the macro is
+complete. Since these macros are designed to be bound to arbitrary
+characters, we determine the ending character based on the starting
+character rather than on the function. We use CLOSER to determine
+this; for (, {, [, <, it matches the closing >, ], }, ). For other
+characters the closer is the character itself, so if you bind one of
+these functions to the dispatch macro character #", then " will be
+used as the ending character.
