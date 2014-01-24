@@ -87,7 +87,7 @@ string is the first unescaped (closer char)")
 	((char-equal c (closer char)))
       (write-char c string))))
 
-(defun formated-string-reader (stream char &optional count)
+(defun formatted-string-reader (stream char &optional count)
   "Returns the value of (format nil string)."
   (declare (ignore count))
   (let ((string (with-output-to-string (s)

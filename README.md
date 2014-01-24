@@ -52,7 +52,7 @@ The Dishes
     PATHNAME-THIS-DIRECTORY-READER:    Read form and return a pathname in the files directory.
     RUN-TIME-SYMBOL-READER:  Reads a delimited list into a form that will find-symbol at runtime.
     INTERNED-STRING-READER:  A string reader which interns the strings.
-    FORMATED-STRING-READER:  Returns the value of (format nil string).
+    FORMATTED-STRING-READER: Returns the value of (format nil string).
     UNESCAPABLE-STRING-READER:    Accumulate each character into a string until (closer char) is seen.
     NOT-READER:         Like ' but for (not ...) instead of (quote ...)
     DECLARE-READER:     Like ' but for (declare ...) instead of (quote ...)
