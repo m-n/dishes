@@ -87,6 +87,18 @@ string is the first unescaped (closer char)")
 	((char-equal c (closer char)))
       (write-char c string))))
 
+(setf (fdefinition 'uninterned-symbol-reader)
+      (lambda (stream char &optional count)
+        (funcall (get-dispatch-macro-character #\# #\: *standard-readtable*)
+                 stream
+                 char
+                 count)))
+
+(setf (documentation 'uninterned-symbol-reader 'function)
+      "Read the following characters as an uninterned symbol.
+
+Doesn't include the dispatch character.")
+
 (defun formatted-string-reader (stream char &optional count)
   "Returns the value of (format nil string)."
   (declare (ignore count))

@@ -51,6 +51,7 @@ The Dishes
     *PRINT-COMMENTED-FORMS*: Print what when a comment-line-supress-forms reader macro is triggerd?
     PATHNAME-THIS-DIRECTORY-READER:    Read form and return a pathname in the files directory.
     RUN-TIME-SYMBOL-READER:  Reads a delimited list into a form that will find-symbol at runtime.
+    UNINTERNED-SYMBOL-READER:     Read the following characters as an uninterned symbol.
     INTERNED-STRING-READER:  A string reader which interns the strings.
     FORMATTED-STRING-READER: Returns the value of (format nil string).
     UNESCAPABLE-STRING-READER:    Accumulate each character into a string until (closer char) is seen.

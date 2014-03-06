@@ -8,6 +8,7 @@
    #:lambda-apply-reader
    #:thunk-reader
    #:\)-reader
+   #:uninterned-symbol-reader
    #:default-syntax-reader
    #:comment-line-suppress-forms
    #:*print-commented-forms*
