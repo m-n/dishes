@@ -173,3 +173,31 @@ position."
 	    ,(opener tagname)
 	    ,@(read-delimited-list end-delimiter stream t)
 	    ,(concatenate 'string "</" tagname ">"))))))
+
+(defun skip-line (stream)
+  (read-line stream ())
+  (values))
+
+(defvar *1\;* #'skip-line "See customizable-\;-reader")
+(defvar *2\;* #'skip-line "See customizable-\;-reader")
+(defvar *3\;* #'skip-line "See customizable-\;-reader")
+(defvar *4+\;* #'skip-line "See customizable-\;-reader")
+
+(defun customizable-\;-reader (stream char &optional count)
+  "Make comment behavior customizable by variables.
+
+There are four special variables, one per comment style, *1\;* through
+*4\;*. The function contained in the respective var is called on the
+remaining stream positioned after the last semicolon, and is
+responsible for reading the rest of the line."
+  (declare (ignore char count))
+  (case (loop for char = (peek-char () stream () ())
+              with count = 1
+              while (eql char #\;)
+              do (incf count) (read-char stream)
+              finally (return count))
+    (1 (funcall *1\;* stream))
+    (2 (funcall *2\;* stream))
+    (3 (funcall *3\;* stream))
+    (t (funcall *4+\;* stream))))
+

@@ -63,6 +63,10 @@ The Dishes
     DEFAULT-SYNTAX-READER:   Read the next form with *readtable* bound to the standard readtable.
     HTML-READER:        Experimental reader for reading sexps into html.
     CLOSER:             The matching end character to char.
+    CUSTOMIZABLE-;-READER:   Make comment behavior customizable by variables.
+        *1;* *2;* *3;* *4+;*
+
+
 
 Read until what?
 ----------------
