@@ -41,9 +41,11 @@ unescaped (closer char)."
                                 (read-char stream t nil t)
                                 c)
                             name.type)))
-     (or *compile-file-truename*
-         *load-truename*
-         *default-pathname-defaults*))))
+     (make-pathname :directory
+                    (pathname-directory
+                     (or *compile-file-truename*
+                         *load-truename*
+                         *default-pathname-defaults*))))))
 
 (defun run-time-symbol-reader (stream char &optional count)
   "Reads a delimited list into a form that will find-symbol at runtime."
