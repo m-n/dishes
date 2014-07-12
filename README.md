@@ -66,8 +66,6 @@ The Dishes
     CUSTOMIZABLE-;-READER:   Make comment behavior customizable by variables.
         *1;* *2;* *3;* *4+;*
 
-
-
 Read until what?
 ----------------
 
