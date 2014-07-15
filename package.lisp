@@ -19,10 +19,6 @@
    #:pathname-this-directory-reader
    #:run-time-symbol-reader
    #:closer
-   #:*1\;*
-   #:*2\;*
-   #:*3\;*
-   #:*4+\;*
-   #:customizable-\;-reader
    #:repl-run-program-reader
+   #:make-customizable-\;-reader
    ))
