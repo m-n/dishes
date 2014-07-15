@@ -24,4 +24,5 @@
    #:*3\;*
    #:*4+\;*
    #:customizable-\;-reader
+   #:repl-run-program-reader
    ))

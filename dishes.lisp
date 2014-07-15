@@ -203,3 +203,36 @@ responsible for reading the rest of the line."
     (3 (funcall *3\;* stream))
     (t (funcall *4+\;* stream))))
 
+(defun repl-run-program-reader (stream char &optional count)
+  "Interpret the rest of the line as a shell command. Print output.
+
+Returns the program's exit code.
+
+e.g. if you set the dispatch char #\# #\Space to this,
+
+    CL-USER># git status
+
+should do the right thing.
+
+If you do not see program output on the slime repl, you may have to
+configure slime to globally redirect output to the slime repl."
+  (declare (ignore count char))
+  `(flet ((run-it (command)
+            (nth-value 2 (funcall (find-symbol  (string '#:run-program) '#:uiop)
+                                  command
+                                  :ignore-error-status t
+                                  :output t
+                                  :error-output t
+                                  :directory *default-pathname-defaults*))))
+     (let ((uiop (find-package '#:uiop))
+           (command ,(read-line stream)))
+       (if uiop
+           (run-it command)
+           (restart-case (error "repl-run-program-reader requires uiop.")
+             (try-to-load-it ()
+               :report "Try to load uiop and continue."
+               (if (ignore-errors (funcall (find-symbol (string '#:load-system)
+                                                        '#:asdf)
+                                           '#:uiop))
+                   (run-it command)
+                   (format t "Failed to load uiop. Aborting ~S." command))))))))

@@ -65,6 +65,7 @@ The Dishes
     CLOSER:             The matching end character to char.
     CUSTOMIZABLE-;-READER:   Make comment behavior customizable by variables.
         *1;* *2;* *3;* *4+;*
+    REPL-RUN-PROGRAM-READER: Interpret the rest of the line as a shell command. Print output.
 
 Read until what?
 ----------------
