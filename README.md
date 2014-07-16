@@ -8,6 +8,46 @@ to which they might be bound. The library is called DISHES because a
 convenient way to serve this style of read macro is by using
 LAZY-SUSAN.
 
+Favorites
+---------
+
+`comment-lines-suppress-forms` is like `#+(or)`, but also treats the
+current line as a comment. I ususally bind it to `#\# #\;`. For
+example, if you want to comment out some code while you reimplement
+it:
+
+    (defun plus (a b)
+      ;; work in progress using the macro as a reference
+      )
+
+    #; reimplementing as function
+    (defmacro plus (a b)
+      `(+ ,a ,b))
+
+`repl-run-program-reader` does `run-program` and prints the
+output. Suppose you bind it to `#\# #\Space`, then you might have the
+following interaction with your lisp repl:
+
+    DISHES> # git status
+    On branch master
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git checkout -- <file>..." to discard changes in working directory)
+
+	    modified:   README.md
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+    0
+    DISHES>
+
+`pathname-this-directory-reader` reads a pathname relative to the file
+being compiled, loaded, or to the default pathname defaults, in that
+order of preference. So if you bind it to `#\# #\[`:
+
+    ;;;; in /home/me/quicklisp/local-projects/dishes/test.lisp
+    #[bar/foo.lisp]
+    ;; reads as #P"/home/me/quicklisp/local-projects/dishes/bar/foo.lisp"
+
 Example
 -------
 
@@ -69,13 +109,21 @@ The Dishes
 Read until what?
 ----------------
 
-For reader macros which process the characters on the stream instead
-of recursively calling read, it's necessary for us to define a
-character that determines when the input to the macro is
-complete. Since these macros are designed to be bound to arbitrary
-characters, we determine the ending character based on the starting
-character rather than on the function. We use CLOSER to determine
-this; for (, {, [, <, it matches the closing >, ], }, ). For other
-characters the closer is the character itself, so if you bind one of
-these functions to the dispatch macro character #", then " will be
-used as the ending character.
+For reader macros which process the stream character by character or
+read a list of elements instead of reading a single element or a line,
+it is necessary for us to define a character that determines when the
+input to the macro is complete. We determine the ending character
+based on the starting character using `closer`. For `#\(` the closer
+is `#\)`. Likewise for `#\{` and `#\}`; `#\[` and `#\]`; and `#\<` and
+`#\>`. For other characters the closer is the character itself, so if
+you bind one of these functions to the dispatch macro character `#\#
+#\"`, then `#\"` will be used as the ending character.
+
+For macros which internally read a list, it is likely necessary to set
+the closer's syntax to the close parenthesis:
+
+    (set-syntax-from-char #\] #\) *my-readtable*)
+
+Otherwise in `[foo bar]` the reader will include the closing brace in
+the symbol name, `"BAR]"`, instead of recognizing it as the completion
+of the read macro's input.
