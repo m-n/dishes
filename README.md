@@ -60,7 +60,7 @@ care of enabling the syntax within SLIME's `C-c C-c` command -- and at
 the slime repl if you switch to the new package -- but the CL
 primitives method does not.
 
-The LAZY-SUSAN method also enables it's readtable adjustments which
+The LAZY-SUSAN method also enables its readtable adjustments which
 still have some gotchyas, so I might recommend to use
 NAMED-READTABLES.
 
