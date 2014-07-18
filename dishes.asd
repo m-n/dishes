@@ -5,8 +5,7 @@
   :description "Some simple reader macros."
   :author "Matt Niemeir <matt.niemeir@gmail.com>"
   :license "BSD 2-clause"
-  :depends-on (#:uiop
-               )
+  :depends-on ()
   :components ((:file "package")
                (:file "utils")
                (:file "dishes")))
