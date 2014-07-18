@@ -3,11 +3,11 @@
 (in-package #:dishes)
 
 (defvar *print-commented-forms* nil
-  "Print what when a comment-line-supress-forms reader macro is triggerd?
+  "Print what when a comment-line-suppress-forms reader macro is triggerd?
   
   Options are :COMMENT or T     -- the comment line
               NIL or :NONE      -- don't print
-              :FORM             -- bind *READ-SUPRESS* to nil, print read forms.")
+              :FORM             -- bind *READ-SUPPRESS* to nil, print read forms.")
 
 (defun comment-line-suppress-forms (stream char &optional count)
   "Comments the rest of the line then read-suppresses COUNT forms, or 1 form.

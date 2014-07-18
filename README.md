@@ -61,8 +61,8 @@ the slime repl if you switch to the new package -- but the CL
 primitives method does not.
 
 The LAZY-SUSAN method also enables it's readtable adjustments which
-still have some gotchyas, so I might recommend to use the
-NAMED-READTABLES method.
+still have some gotchyas, so I might recommend to use
+NAMED-READTABLES.
 
 Using NAMED-READTABLES
 ----------------------
@@ -99,7 +99,7 @@ To create and setup the readtable:
     (in-package #:example-package)
 
     (ls:setup-package-rt (example-package)
-      (#\# #\;) #'comment-line-suppress-forms)
+      (#\# #\;) #'dishes:comment-line-suppress-forms)
 
 To use the readtable:
 
@@ -123,7 +123,7 @@ To create and setup the readtable:
     (defvar *served-readtable* (copy-readtable ()))
 
     (set-dispatch-macro-character
-     #\# #\; #'dishes:comment-line-supress-forms *served-readtable*)
+     #\# #\; #'dishes:comment-line-suppress-forms *served-readtable*)
 
 To use the readtable:
 
@@ -138,7 +138,7 @@ The Dishes
 ==========
 
     COMMENT-LINE-SUPPRESS-FORMS:  Comments the rest of the line then read-suppresses COUNT forms, or 1 form.
-    *PRINT-COMMENTED-FORMS*: Print what when a comment-line-supress-forms reader macro is triggerd?
+    *PRINT-COMMENTED-FORMS*: Print what when a comment-line-suppress-forms reader macro is triggerd?
     PATHNAME-THIS-DIRECTORY-READER:    Read form and return a pathname in the files directory.
     RUN-TIME-SYMBOL-READER:  Reads a delimited list into a form that will find-symbol at runtime.
     UNINTERNED-SYMBOL-READER:     Read the following characters as an uninterned symbol.
