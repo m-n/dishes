@@ -151,7 +151,7 @@ position."
 (defparameter *html-solo-tags* '("input" "br"))
 
 (defun html-reader (stream char &optional count)
-  "Experimental reader for reading sexps into html."
+  "Experimental reader for reading s-exps into html."
   (declare (ignore count))
   (let ((tagname (make-array '(0) :fill-pointer 0 :adjustable t
 			     :element-type 'base-char))
