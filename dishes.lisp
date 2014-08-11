@@ -4,7 +4,7 @@
 
 (defvar *print-commented-forms* nil
   "Print what when a comment-line-suppress-forms reader macro is triggerd?
-  
+
   Options are :COMMENT or T     -- the comment line
               NIL or :NONE      -- don't print
               :FORM             -- bind *READ-SUPPRESS* to nil, print read forms.")
@@ -50,8 +50,10 @@ unescaped (closer char)."
 (defun run-time-symbol-reader (stream char &optional count)
   "Reads a delimited list into a form that will find-symbol at runtime."
   (declare (ignore count))
-  (destructuring-bind (package name) (read-delimited-list (closer char) stream)
-    `(find-symbol ,(symbol-name name) ,(symbol-name package))))
+  (if *read-suppress*
+      (read-delimited-list (closer char) stream)
+      (destructuring-bind (package name) (read-delimited-list (closer char) stream)
+        `(find-symbol ,(symbol-name name) ,(symbol-name package)))))
 
 (defun make-interned-string-reader (&key case-insensitive-p)
   (let ((words (make-hash-table :test (if case-insensitive-p 'equalp 'equal))))
