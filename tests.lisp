@@ -5,7 +5,9 @@
 (in-package #:dishes-test)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (setq *readtable* (copy-readtable ())))
+  (setq *readtable* (copy-readtable ()))
+  (set-dispatch-macro-character
+   #\# #\[ #'dishes:pathname-this-directory-reader))
 
 (defvar *test-readtable* (copy-readtable ()))
 
@@ -96,7 +98,9 @@ foo\"")))
 (define-reader-test (#\# #\[) dishes:pathname-this-directory-reader
   (each
     (equal (namestring (asdf/system:system-relative-pathname :dishes "bar"))
-           (namestring (test-read "#[bar]")))
+           ;; This read macro must run during read time for the right
+           ;; *compile-file-truename* or *load-truename* to be active.
+           (namestring #[bar]))
     (eq (test-read/suppress1 "#[bar] foo")
         'foo)))
 
