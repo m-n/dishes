@@ -38,19 +38,19 @@
   (each
     (= 1
        (test-read "#; foo
-foo
+undefined-package%%:foo
 1"))
     (= 2
        (test-read/suppress1 "#; foo
-foo
+undefined-package%%:foo
 1
 2
 "))
     (= 2
        (test-read "#; foo
 #+(or)
-foo
-1
+undefined-package%%:foo
+undefined-package%%:1
 2
 "))))
 
@@ -85,7 +85,7 @@ foo\"")))
   (each
     (eq (car (test-read "^(foo)"))
         'lambda)
-    (eq (test-read/suppress1 "^(foo) bar")
+    (eq (test-read/suppress1 "^(undefined-package%%:foo) bar")
         'bar)))
 
 (define-reader-test (#\!) dishes:not-reader
@@ -119,14 +119,15 @@ bar")
         'dishes:run-time-symbol-reader)
     (not (eq (test-read "[dishes run-time-symbol-reader]")
              'dishes:run-time-symbol-reader))
-    (eq (test-read/suppress1 "[undefined-packag%% foo] bar")
+    (eq (test-read/suppress1
+         "[undefined-packag%%:undefined-package%% undefined-package%%:foo] bar")
         'bar)))
 
 (define-reader-test (#\^) dishes:thunk-reader
   (each
     (equal (car (test-read "^(progn (print 'baz))"))
            'lambda)
-    (equal (test-read/suppress1 "^(progn (print 'baz)) foo")
+    (equal (test-read/suppress1 "^(progn (print 'undefined-package%%:baz)) foo")
            'foo)))
 
 (define-reader-test (#\/) dishes:unescapable-string-reader
@@ -142,5 +143,5 @@ bar")
              (test-read "$bar")))
     (string= (test-read "$bar")
              'bar)
-    (eq (test-read/suppress1 "$bar foo")
+    (eq (test-read/suppress1 "$undefined-package%%:bar foo")
         'foo)))
