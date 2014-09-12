@@ -8,16 +8,15 @@
   :depends-on ()
   :components ((:file "package")
                (:file "utils")
-               (:file "dishes")))
+               (:file "dishes"))
+  :in-order-to ((test-op (load-op dishes-test)))
+  :perform (test-op :around (op c)
+                    (call-next-method)
+                    (funcall (intern (symbol-name :run-tests)
+                                     :yarty)
+                             :dishes-test)))
 
 (asdf:defsystem #:dishes-test
   :serial t
   :depends-on (:dishes :yarty)
   :components ((:file "tests")))
-
-(defmethod asdf:perform ((o asdf:test-op)
-                         (c (eql (asdf:find-system :dishes))))
-  (asdf:operate 'asdf:load-op :dishes-test)
-  (funcall (intern (symbol-name :run-tests)
-                   (find-package :yarty))
-           :dishes-test))
