@@ -142,7 +142,7 @@ position."
 
 (defun \)-reader (&rest args)
   "The reader macro function for close paren in the standard readtable."
-  (apply (get-macro-character #\) ()) args))
+  (apply (load-time-value (get-macro-character #\) ())) args))
 
 (defun default-syntax-reader (stream char &optional count)
   "Read the next form with *readtable* bound to the standard readtable."
