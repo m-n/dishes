@@ -240,3 +240,42 @@ configure slime to globally redirect output to the slime repl."
                                            '#:uiop))
                    (run-it command)
                    (format t "Failed to load uiop. Aborting ~S." command))))))))
+
+(defun hash-table-reader (stream char &optional count)
+  "Read into a form which will create a hash table when evaluated.
+
+The syntax has three cases. We'll demonstrate with examples using #\[:
+
+1. Even number of arguments: create hash table with all arguments defaulted.
+
+    ;; The hash table is created by (make-hash-table).
+    [:foo 'a
+     :bar 'b]
+
+2. Odd number of arguments: supply the first as make-hash-table's arguments.
+
+    ;; The hash table is created by (make-hash-table :weak t :test #'eq).
+    [(:weak t :test #'eq)
+     (find-object 'foo) 'a
+     (find-object 'bar) 'b]
+
+3. Odd number starting with a symbol: shortand to specify a test.
+
+    ;; The has table is created by (make-hash-table :test #'equal).
+    [equal
+     \"foo\" 'a
+     \"bar\" 'b]
+"
+  (declare (ignore count))
+  (let* ((all (read-delimited-list (closer char) stream t))
+         (mht-args (when (oddp (length all))
+                     (let ((spec (pop all)))
+                       (typecase spec
+                         (symbol
+                          `(:test #',spec))
+                         (otherwise spec)))))
+         (ht (gensym)))
+    `(let ((,ht (make-hash-table ,@mht-args)))
+       ,@(loop for (k v) on all by #'cddr
+               collect `(setf (gethash ,k ,ht) ,v))
+       ,ht)))

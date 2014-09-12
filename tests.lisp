@@ -145,3 +145,17 @@ bar")
              'bar)
     (eq (test-read/suppress1 "$undefined-package%%:bar foo")
         'foo)))
+
+(set-syntax-from-char #\} #\) *test-readtable*)
+
+(define-reader-test (#\{) dishes:hash-table-reader
+  (flet ((htc=2 (ht) (= 2 (hash-table-count ht))))
+    (each (htc=2 (eval (test-read "{:foo 'a
+                                   :bar 'b}")))
+          (htc=2 (eval (test-read "{equal
+                                  \"foo\" 'a
+                                  (copy-seq \"foo\") 'b
+                                  :bar 'b}")))
+          (htc=2 (eval (test-read "{(:size (* 8 8) :test #'eq)
+                                   :foo 'a
+                                   :bar 'b}"))))))

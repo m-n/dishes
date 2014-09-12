@@ -155,6 +155,7 @@ The Dishes
     CLOSER:             The matching end character to char.
     MAKE-CUSTOMIZABLE-\;-READER:   Return a comment reader with customizeable behavior for different ; counts.
     REPL-RUN-PROGRAM-READER: Interpret the rest of the line as a shell command. Print output.
+    HASH-TABLE-READER:  Read into a form which will create a hash table when evaluated.
 
 Read until what?
 ----------------

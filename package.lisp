@@ -21,4 +21,5 @@
    #:closer
    #:repl-run-program-reader
    #:make-customizable-\;-reader
+   #:hash-table-reader
    ))
