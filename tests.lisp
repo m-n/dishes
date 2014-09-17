@@ -158,4 +158,9 @@ bar")
                                   :bar 'b}")))
           (htc=2 (eval (test-read "{(:size (* 8 8) :test #'eq)
                                    :foo 'a
-                                   :bar 'b}"))))))
+                                   :bar 'b}")))
+          (eq :foo (test-read/suppress1
+                    "{(:size (* 8 8) :test #'no-such-package::eq)
+                      no-such-package%%:foo 'a
+                      :bar 'b}
+                     :foo")))))
