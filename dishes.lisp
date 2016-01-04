@@ -27,7 +27,7 @@ useful when accompanied by an explanatory comment."
 	     (values)))))
 
 (defun pathname-this-directory-reader (stream char &optional count)
-  "Read form and return a pathname in the files directory.
+  "Read form and return a pathname in the file's directory.
 
 Assumes the form is a backslash escaped form ending at the first
 unescaped (closer char)."
@@ -41,11 +41,11 @@ unescaped (closer char)."
                                 (read-char stream t nil t)
                                 c)
                             name.type)))
-     (make-pathname :directory
-                    (pathname-directory
-                     (or *compile-file-truename*
-                         *load-truename*
-                         *default-pathname-defaults*))))))
+     (merge-pathnames
+      (make-pathname :type :unspecific)
+      (or *compile-file-truename*
+          *load-truename*
+          *default-pathname-defaults*)))))
 
 (defun run-time-symbol-reader (stream char &optional count)
   "Reads a delimited list into a form that will find-symbol at runtime."

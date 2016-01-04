@@ -139,7 +139,7 @@ The Dishes
 
     COMMENT-LINE-SUPPRESS-FORMS:  Comments the rest of the line then read-suppresses COUNT forms, or 1 form.
     *PRINT-COMMENTED-FORMS*: Print what when a comment-line-suppress-forms reader macro is triggerd?
-    PATHNAME-THIS-DIRECTORY-READER:    Read form and return a pathname in the files directory.
+    PATHNAME-THIS-DIRECTORY-READER:    Read form and return a pathname in the file's directory.
     RUN-TIME-SYMBOL-READER:  Reads a delimited list into a form that will find-symbol at runtime.
     UNINTERNED-SYMBOL-READER:     Read the following characters as an uninterned symbol.
     INTERNED-STRING-READER:  A string reader which interns the strings.
